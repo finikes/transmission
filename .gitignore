@@ -21,3 +21,15 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.idea/encodings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/transmission.iml
+.idea/workspace.xml
+.idea/compiler.xml
+.idea/vcs.xml
+.idea/libraries/
+src/main/resources/
+target/generated-sources/
+src/test/
+target/generated-test-sources/
