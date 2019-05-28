@@ -37,3 +37,13 @@ target/maven-archiver/
 target/maven-status/
 target/surefire-reports/
 target/transmission-1.0-SNAPSHOT.jar
+target/apidocs/
+target/javadoc-bundle-options/
+target/transmission-1.0-javadoc.jar
+target/transmission-1.0-javadoc.jar.asc
+target/transmission-1.0-sources.jar
+target/transmission-1.0-sources.jar.asc
+target/transmission-1.0.jar
+target/transmission-1.0.jar.asc
+target/transmission-1.0.pom
+target/transmission-1.0.pom.asc

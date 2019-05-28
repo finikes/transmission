@@ -4,9 +4,43 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
     <groupId>io.github.finikes</groupId>
     <artifactId>transmission</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
+
+    <name>transmission</name>
+    <description>RPC framework</description>
+    <url>https://github.com/finikes/transmission</url>
+
+    <packaging>jar</packaging>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>scm:git:git@github.com:finikes/transmission.git</url>
+        <connection>scm:git:git@github.com:finikes/transmission.git</connection>
+        <developerConnection>git@github.com:finikes/transmission.git</developerConnection>
+        <tag>2.0</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>finikes</name>
+            <email>finikes@hotmail.com</email>
+            <url>https://github.com/finikes/transmission</url>
+        </developer>
+    </developers>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
@@ -16,4 +50,72 @@
             <version>1.2.58</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>oss</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <gpg.executable>gpg</gpg.executable>
+                <gpg.passphrase>Delubons~#6363</gpg.passphrase>
+                <gpg.executable>C:\Program Files (x86)\GnuPG\bin\gpg.exe</gpg.executable>
+                <gpg.homedir>C:/Users/Administrator/AppData/Roaming/gnupg</gpg.homedir>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
