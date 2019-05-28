@@ -1,4 +1,4 @@
-package org.finikes.rmi.client;
+package io.github.finikes.rmi.client;
 
 import java.lang.reflect.Field;
 

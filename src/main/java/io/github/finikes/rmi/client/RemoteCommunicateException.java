@@ -1,4 +1,4 @@
-package org.finikes.rmi.client;
+package io.github.finikes.rmi.client;
 
 public class RemoteCommunicateException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

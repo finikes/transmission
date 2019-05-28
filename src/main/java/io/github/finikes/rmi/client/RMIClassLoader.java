@@ -1,4 +1,4 @@
-package org.finikes.rmi.client;
+package io.github.finikes.rmi.client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;

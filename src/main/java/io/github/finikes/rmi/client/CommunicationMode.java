@@ -1,4 +1,4 @@
-package org.finikes.rmi.client;
+package io.github.finikes.rmi.client;
 
 public enum CommunicationMode {
     TCP_RPC("doRpc"), HTTP_GET("doGet"), HTTP_POST("doPost"), HTTP_DELETE("doDelete"), HTTP_PUT("doPut"),

@@ -1,8 +1,8 @@
-package org.finikes.rmi.client.http;
+package io.github.finikes.rmi.client.http;
 
 import java.util.Map;
 
-import org.finikes.rmi.client.ClientAdapter;
+import io.github.finikes.rmi.client.ClientAdapter;
 
 public class HttpClientImpl extends ClientAdapter {
 

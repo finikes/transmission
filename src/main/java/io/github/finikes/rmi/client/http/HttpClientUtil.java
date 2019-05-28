@@ -1,4 +1,4 @@
-package org.finikes.rmi.client.http;
+package io.github.finikes.rmi.client.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;
