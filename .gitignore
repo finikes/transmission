@@ -32,3 +32,8 @@ src/main/resources/
 target/generated-sources/
 src/test/
 target/generated-test-sources/
+bin/
+target/maven-archiver/
+target/maven-status/
+target/surefire-reports/
+target/transmission-1.0-SNAPSHOT.jar
