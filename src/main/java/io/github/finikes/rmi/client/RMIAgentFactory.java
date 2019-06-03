@@ -16,8 +16,12 @@ public class RMIAgentFactory {
 
     private static final Map<String, Object> SERVICE_INSTANCE_CONTAINER = new HashMap<String, Object>();
 
-    @SuppressWarnings("unchecked")
     public static <T> T create(Class<T> type) {
+        return create(type, "io.github.finikes.rmi.client.http.HttpURLConnectionImpl");
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T create(Class<T> type, String clientTypeName) {
         String interfaceCanonicalName = type.getCanonicalName();
         T instance = (T) SERVICE_INSTANCE_CONTAINER.get(interfaceCanonicalName);
         if (null != instance) {
@@ -32,7 +36,7 @@ public class RMIAgentFactory {
         String interfaceName = type.getSimpleName();
         File temp = null;
         try {
-            temp = createFile(interfaceName + "Impl.java", type);
+            temp = createFile(interfaceName + "Impl.java", type, clientTypeName);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RMIInitializeException(e);
@@ -67,7 +71,7 @@ public class RMIAgentFactory {
         return instance;
     }
 
-    private static File createFile(String filename, Class<?> type) throws IOException {
+    private static File createFile(String filename, Class<?> type, String clientTypeName) throws IOException {
         FileOutputStream out = null;
         PrintStream printStream = null;
         File file = null;
@@ -79,7 +83,7 @@ public class RMIAgentFactory {
 
             out = new FileOutputStream(filepath);
             printStream = new PrintStream(out);
-            printStream.print(RMIAgentClassCodeBuilder.build(type, "io.github.finikes.rmi.client.http.HttpClientImpl"));
+            printStream.print(RMIAgentClassCodeBuilder.build(type, clientTypeName));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

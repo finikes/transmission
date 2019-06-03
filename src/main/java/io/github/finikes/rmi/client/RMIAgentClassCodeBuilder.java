@@ -84,17 +84,71 @@ public class RMIAgentClassCodeBuilder {
             sb.append("		}");
             sb.append(SystemLineSeparator);
             sb.append(SystemLineSeparator);
-
             if (!"void".equals(returnType)) {
-                sb.append("		try {");
+                sb.append(addTab(2)).append("io.github.finikes.rmi.client.RMIBizExceptionResponseWrap responseWrap = null;");
                 sb.append(SystemLineSeparator);
-                sb.append("			return JSON.parseObject(result, " + returnType + ".class);");
+                sb.append(addTab(2)).append("try {");
                 sb.append(SystemLineSeparator);
-                sb.append("		} catch (Exception e) {");
+                sb.append(addTab(3)).append("responseWrap = JSON.parseObject(result, io.github.finikes.rmi.client.RMIBizExceptionResponseWrap.class);");
                 sb.append(SystemLineSeparator);
-                sb.append("			throw new io.github.finikes.rmi.client.RemoteCommunicateException(e);");
+                sb.append(addTab(3)).append("String signatureCode = responseWrap.getSignatureCode();");
                 sb.append(SystemLineSeparator);
-                sb.append("		}");
+                sb.append(addTab(3)).append("if(null != signatureCode && !signatureCode.equals(io.github.finikes.rmi.client.RMIBizExceptionResponseWrap.SIGNATURE_CODE())) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(4)).append("throw new io.github.finikes.rmi.client.RemoteSignatureException(signatureCode);");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("}");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("throw new io.github.finikes.rmi.client.RemoteBizException(responseWrap.getCode(), responseWrap.getMessage());");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("} catch (io.github.finikes.rmi.client.RemoteBizException e) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("throw e;");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("} catch (io.github.finikes.rmi.client.RemoteSignatureException e) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("throw e;");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("} catch (Exception e) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("try {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(4)).append("return JSON.parseObject(result, " + returnType + ".class);");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("} catch (Exception ex) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(4)).append("throw new io.github.finikes.rmi.client.RemoteCommunicateException(ex);");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("}");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("}");
+                sb.append(SystemLineSeparator);
+            } else {
+                sb.append(addTab(2)).append("io.github.finikes.rmi.client.RMIBizExceptionResponseWrap responseWrap = null;");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("try {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("responseWrap = JSON.parseObject(result, io.github.finikes.rmi.client.RMIBizExceptionResponseWrap.class);");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("String signatureCode = responseWrap.getSignatureCode();");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("if(null != signatureCode && !signatureCode.equals(io.github.finikes.rmi.client.RMIBizExceptionResponseWrap.SIGNATURE_CODE())) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(4)).append("throw new io.github.finikes.rmi.client.RemoteSignatureException(signatureCode);");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("}");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("throw new io.github.finikes.rmi.client.RemoteBizException(responseWrap.getCode(), responseWrap.getMessage());");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("} catch (io.github.finikes.rmi.client.RemoteBizException e) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("throw e;");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("} catch (io.github.finikes.rmi.client.RemoteSignatureException e) {");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(3)).append("throw e;");
+                sb.append(SystemLineSeparator);
+                sb.append(addTab(2)).append("}");
                 sb.append(SystemLineSeparator);
             }
         }
@@ -166,5 +220,14 @@ public class RMIAgentClassCodeBuilder {
         }
 
         return paramNames;
+    }
+
+    private static StringBuilder addTab(int num) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < num; i++) {
+            sb.append("\t");
+        }
+
+        return sb;
     }
 }
