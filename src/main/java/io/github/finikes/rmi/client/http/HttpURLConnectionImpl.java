@@ -14,12 +14,8 @@ public class HttpURLConnectionImpl extends ClientAdapter {
     @Override
     public String doGet(String httpUrl, Map<String, Object> params) {
         StringBuilder response = new StringBuilder();
-        try {
-            httpUrl = httpUrl + "?" + new String(paramsToString(params).getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        System.out.println(httpUrl + " !!!");
+        httpUrl = httpUrl + "?" + paramsToString(params);
+
         try {
             URL url = new URL(httpUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -30,7 +26,7 @@ public class HttpURLConnectionImpl extends ClientAdapter {
             connection.setConnectTimeout(15000);
             // 设置读取主机服务器返回数据超时时间：60000毫秒
             connection.setReadTimeout(60000);
-            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+            connection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             connection.connect();
             BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String readLine = null;
